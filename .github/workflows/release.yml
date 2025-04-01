@@ -1,0 +1,51 @@
+name: Release
+
+on:
+  workflow_dispatch:
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    env:
+      Solution_Name: ServiceDiscovery.Nomad
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    # Install the .NET Core workload
+    - name: Install .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 9.0.x
+
+    # Install GitVersion
+    - name: Install GitVersion
+      uses: gittools/actions/gitversion/setup@v3.1.11
+      with:
+        versionSpec: '6.0.x'
+        preferLatestVersion: true
+
+    # Restore
+    - name: Restore
+      run: dotnet restore
+
+    # GitVersion
+    - name: Version
+      uses: gittools/actions/gitversion/setup@v3.1.11
+      with:
+        arguments: -updateprojectfiles
+
+    # Build
+    - name: Build
+      run: dotnet build --configuration Release --nologo --no-restore
+
+    # Upload
+    - name: Upload
+      run: dotnet nuget push --skip-duplicate
+      
