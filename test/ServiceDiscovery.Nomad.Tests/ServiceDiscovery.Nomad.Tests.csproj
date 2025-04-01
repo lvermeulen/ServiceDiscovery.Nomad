@@ -1,11 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <InformationalVersion>1.0.0+1.Branch.main.Sha.cb21bc6f6f08e5e87605dde2c22e723975bde4fa</InformationalVersion>
+    <Version>1.0.0</Version>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
     <PackageReference Include="xunit" Version="2.9.3" />
@@ -14,13 +16,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\src\ServiceDiscovery.Nomad\ServiceDiscovery.Nomad.csproj" />
   </ItemGroup>
-
   <ItemGroup>
     <Using Include="Xunit" />
   </ItemGroup>
-
 </Project>
