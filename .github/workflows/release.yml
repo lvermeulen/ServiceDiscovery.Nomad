@@ -36,11 +36,12 @@ jobs:
       run: dotnet restore
 
     # GitVersion
-    - name: Version
-      uses: gittools/actions/gitversion/setup@v3.1.11
+    - name: Determine Version
+      id: version_step
+      uses: gittools/actions/gitversion/execute@v3.1.11
       with:
-        arguments: -updateprojectfiles
-
+        updateProjectFiles: true
+      
     # Build
     - name: Build
       run: dotnet build --configuration Release --nologo --no-restore
