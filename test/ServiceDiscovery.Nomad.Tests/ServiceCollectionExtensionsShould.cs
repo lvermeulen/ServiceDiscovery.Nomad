@@ -2,7 +2,7 @@
 
 namespace ServiceDiscovery.Nomad.Tests;
 
-public class HostingExtensionsShould
+public class ServiceCollectionExtensionsShould
 {
     [Fact]
     public void AddNomadServiceEndpointProvider()
