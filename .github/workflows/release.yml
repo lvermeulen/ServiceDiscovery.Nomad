@@ -5,7 +5,7 @@ on:
 
 jobs:
 
-  build:
+  release:
 
     runs-on: ubuntu-latest
 
@@ -48,5 +48,5 @@ jobs:
 
     # Upload
     - name: Upload
-      run: dotnet nuget push --skip-duplicate
+      run: dotnet nuget push src/ServiceDiscovery.Nomad/bin/Release/*.nupkg --source nuget --api-key ${{ secrets.NUGETAPIKEY }} --skip-duplicate
       
