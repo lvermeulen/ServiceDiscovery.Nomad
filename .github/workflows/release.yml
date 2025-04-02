@@ -26,10 +26,7 @@ jobs:
 
     # Install GitVersion
     - name: Install GitVersion
-      uses: gittools/actions/gitversion/setup@v3.1.11
-      with:
-        versionSpec: '6.0.x'
-        preferLatestVersion: true
+      run: dotnet tool update GitVersion.Tool --global --version 5.*
 
     # Restore
     - name: Restore
@@ -37,10 +34,7 @@ jobs:
 
     # GitVersion
     - name: Determine Version
-      id: version_step
-      uses: gittools/actions/gitversion/execute@v3.1.11
-      with:
-        updateProjectFiles: true
+      run: dotnet gitversion -updateprojectfiles
       
     # Build
     - name: Build
