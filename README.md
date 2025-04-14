@@ -8,6 +8,7 @@ Add package ServiceDiscovery.Nomad to your Aspire ServiceDefaults project.
 dotnet add package ServiceDiscovery.Nomad
 ```
 
+
 In your Aspire ServiceDefaults project, replace the following:
 ```csharp
 ~~builder.Services.AddServiceDiscovery();~~
