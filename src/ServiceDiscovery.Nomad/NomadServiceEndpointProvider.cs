@@ -8,12 +8,14 @@ using Microsoft.Extensions.ServiceDiscovery;
 
 namespace ServiceDiscovery.Nomad;
 
-public class NomadServiceEndpointProvider(string serviceName, ILogger<NomadServiceEndpointProvider> logger) : IServiceEndpointProvider, IHostNameFeature
+public class NomadServiceEndpointProvider(string? serviceName, ILogger<NomadServiceEndpointProvider> logger) : IServiceEndpointProvider, IHostNameFeature
 {
-    public string HostName => serviceName;
+    private const string UnknownServiceName = "UnknownServiceName";
+
+    public string HostName => serviceName ?? UnknownServiceName;
 
     public NomadServiceEndpointProvider(ServiceEndpointQuery? query, ILogger<NomadServiceEndpointProvider> logger)
-        : this(query?.ServiceName ?? "Unknown", logger)
+        : this(query?.ServiceName ?? UnknownServiceName, logger)
     { }
 
     public async ValueTask PopulateAsync(IList<ServiceEndpoint> endpoints, CancellationToken cancellationToken)

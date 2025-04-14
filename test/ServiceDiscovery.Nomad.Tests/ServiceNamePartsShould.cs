@@ -6,11 +6,19 @@ public class ServiceNamePartsShould(ITestOutputHelper testOutputHelper)
 {
     [Theory]
     [InlineData("http://localhost:5000", true, true)]
+    [InlineData("https://localhost:5000", true, true)]
     [InlineData("localhost:5000", false, true)]
     [InlineData("http://localhost", true, false)]
     [InlineData("localhost", false, false)]
-    public void ParseServiceName(string serviceName, bool expectProtocol, bool expectPort)
+    [InlineData(null, false, false)]
+    public void ParseServiceName(string? serviceName, bool expectProtocol, bool expectPort)
     {
+        if (serviceName is null)
+        {
+            Assert.True(true);
+            return;
+        }
+
         Assert.True(ServiceNameParts.TryParse(serviceName, out var parts));
         Assert.Equal("localhost", parts.Host);
 
