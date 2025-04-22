@@ -35,8 +35,12 @@ public class NomadServiceEndpointProvider(string? serviceName, ILogger<NomadServ
             // get value from NOMAD_ADDR_* environment variable
             var envVars = Environment.GetEnvironmentVariables().Keys
                 .OfType<string>()
-                .Where(x => x.StartsWith("NOMAD_ADDR_") && x.EndsWith(serviceNameParts.Host))
-                .ToList();
+                .Where(x => x.StartsWith("NOMAD_ADDR_") && x.EndsWith(serviceNameParts.Host));
+
+            if (serviceNameParts.EndPointName is not null && serviceNameParts.EndPointName.Contains("https", StringComparison.OrdinalIgnoreCase))
+            {
+                envVars = envVars.Where(x => x.Contains("https", StringComparison.OrdinalIgnoreCase));
+            }
 
             foreach (var envVar in envVars)
             {

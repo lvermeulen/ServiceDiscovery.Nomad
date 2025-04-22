@@ -7,6 +7,7 @@ public class ServiceNamePartsShould(ITestOutputHelper testOutputHelper)
     [Theory]
     [InlineData("http://localhost:5000", true, true)]
     [InlineData("https://localhost:5000", true, true)]
+    [InlineData("https+http://localhost:5000", true, true)]
     [InlineData("localhost:5000", false, true)]
     [InlineData("http://localhost", true, false)]
     [InlineData("localhost", false, false)]

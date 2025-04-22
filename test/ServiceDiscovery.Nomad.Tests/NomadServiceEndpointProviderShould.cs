@@ -20,7 +20,7 @@ public class NomadServiceEndpointProviderShould(ITestOutputHelper testOutputHelp
     public async Task PopulateAsync(string? serviceName)
     {
         // setup
-        Environment.SetEnvironmentVariable($"NOMAD_ADDR_{GetServiceName(serviceName)}", "http://localhost:8765");
+        SetEnvironmentVariables(serviceName, "localhost:80", "localhost:443");
         try
         {
             var loggerFactory = new LoggerFactory();
@@ -39,8 +39,23 @@ public class NomadServiceEndpointProviderShould(ITestOutputHelper testOutputHelp
         finally
         {
             // cleanup
-            Environment.SetEnvironmentVariable($"NOMAD_ADDR_{GetServiceName(serviceName)}", null);
+            SetEnvironmentVariables(serviceName, null);
         }
+    }
+
+    private static void SetEnvironmentVariables(string? serviceName, params string?[]? value)
+    {
+        var actualServiceName = GetServiceName(serviceName);
+
+        if (value is null || value.Length == 0)
+        {
+            Environment.SetEnvironmentVariable($"NOMAD_ADDR_http_{actualServiceName}", null);
+            Environment.SetEnvironmentVariable($"NOMAD_ADDR_https_{actualServiceName}", null);
+            return;
+        }
+
+        Environment.SetEnvironmentVariable($"NOMAD_ADDR_http_{actualServiceName}", value[0]);
+        Environment.SetEnvironmentVariable($"NOMAD_ADDR_https_{actualServiceName}", value[1]);
     }
 
     private static string? GetServiceName(string? serviceName)
